@@ -10,8 +10,8 @@ int main(){
   }
   auto endTime = chrono::high_resolution_clock::now();
 
-  auto elapsedTime = chrono::duration_cast<chrono::milliseconds>(endTime - startTime);
+  auto elapsedTime = chrono::duration_cast<chrono::milliseconds>(endTime - startTime).count() / 1000.0;
   cout << "Count is " << count << endl;
-  cout << "Execution time " << elapsedTime.count() << " milliseconds.";
+  cout << "Execution time " << elapsedTime << " seconds.";
   return 0;
 }
