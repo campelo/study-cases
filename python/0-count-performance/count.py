@@ -3,7 +3,7 @@ import time
 def main():
   start = time.time()
   count = 0
-  for i in range(0,1000000000):
+  for i in range(0, 1_000_000_000):
     count += 1
   end = time.time()
   elapsedTime = end-start
