@@ -1,7 +1,8 @@
 ﻿using System.Data.OleDb;
 
 string filePath = @"C:\Temp";
-string tableName = "FAR0091";
+//string tableName = "FAR0091";
+string tableName = "FAR0181";
 string connectionString = $"Provider=VFPOLEDB;Data Source={filePath};";
 
 using (OleDbConnection connection = new OleDbConnection(connectionString))
