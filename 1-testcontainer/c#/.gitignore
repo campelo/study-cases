@@ -6,8 +6,10 @@
 *.user
 *.sln.docstates
 
-# Build results
+# BenchmarkDotNet artifacts
+BenchmarkDotNet.Artifacts/
 
+# Build results
 [Dd]ebug/
 [Rr]elease/
 x64/
