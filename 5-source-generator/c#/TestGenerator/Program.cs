@@ -1,3 +1,6 @@
 ﻿using SampleSourceGenerator;
 
-Console.WriteLine(ClassNames.SayHello); // Hello from my source generator!
+foreach (var className in ClassNames.Names)
+  Console.WriteLine(className);
+
+  public class Foo(){}
