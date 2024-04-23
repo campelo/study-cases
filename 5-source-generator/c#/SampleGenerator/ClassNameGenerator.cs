@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace SampleGenerator;
-[Generator]
+[Generator(LanguageNames.CSharp)]
 public class ClassNameGenerator : IIncrementalGenerator
 {
   public void Initialize(IncrementalGeneratorInitializationContext context)
@@ -32,7 +32,7 @@ public class ClassNameGenerator : IIncrementalGenerator
   {
 #if DEBUG
     if (!System.Diagnostics.Debugger.IsAttached)
-      System.Diagnostics.Debugger.Launch();
+      System.Diagnostics.Debugger.Break();
 #endif
     if (types.Length == 0)
       context.ReportDiagnostic(Diagnostic.Create(
