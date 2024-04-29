@@ -18,7 +18,7 @@ public class CreateFakeData
         _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
     }
 
-    [BenchmarkDotNet.Attributes.Benchmark]
+    [Benchmark]
     public Practitioner RegularCreate()
     {
         Practitioner a = new() { Id = _id };

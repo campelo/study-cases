@@ -4,7 +4,8 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        //var summary = BenchmarkRunner.Run<MapAssemblies>();
-        var summary = BenchmarkRunner.Run<CreateFakeData>();
+        //_ = BenchmarkRunner.Run<MapAssemblies>();
+        //_ = BenchmarkRunner.Run<CreateFakeData>();
+        _ = BenchmarkRunner.Run<CreateString>();
     }
 }

@@ -16,6 +16,19 @@ This is a simple benchmark to compare the performance of different libraries to 
 | FixtureBuild  | 140,929,491.18 ns | 2,789,289.261 ns | 4,504,182.232 ns |
 ```
 
+## Create String
+
+This is a simple benchmark to compare the performance of different libraries to create a string.
+
+```
+| Method         | Mean            | Error         | StdDev        |
+|--------------- |----------------:|--------------:|--------------:|
+| RegularCreate  |       0.0000 ns |     0.0000 ns |     0.0000 ns |
+| RegularNewGuid |      45.1917 ns |     0.5001 ns |     0.4678 ns |
+| FixtureCreate  |   3,183.5999 ns |    23.0440 ns |    21.5554 ns |
+| BogusName		 | 402,038.6021 ns | 5,311.9270 ns | 4,708.8849 ns |
+```
+
 ## Map Assemblies
 
 This is a simple benchmark to compare the performance of different mapping assemblies.
