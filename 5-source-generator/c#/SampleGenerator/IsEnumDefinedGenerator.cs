@@ -78,10 +78,10 @@ internal sealed partial class IsEnumDefinedGenerator : IIncrementalGenerator
         context.RegisterSourceOutput(source, static void (SourceProductionContext context, IsEnumDefinedType source) =>
         {
 #if DEBUG
-            if (!System.Diagnostics.Debugger.IsAttached)
-                System.Diagnostics.Debugger.Launch();
-            else
-                System.Diagnostics.Debugger.Break();
+            //if (!System.Diagnostics.Debugger.IsAttached)
+            //    System.Diagnostics.Debugger.Launch();
+            //else
+            //    System.Diagnostics.Debugger.Break();
 #endif
 
             Debug.Assert(!source.Methods.IsEmpty);

@@ -31,10 +31,10 @@ public class ClassNameGenerator : IIncrementalGenerator
       ImmutableArray<ClassDeclarationSyntax> types)
     {
 #if DEBUG
-        if (!System.Diagnostics.Debugger.IsAttached)
-            System.Diagnostics.Debugger.Launch();
-        else
-            System.Diagnostics.Debugger.Break();
+        //if (!System.Diagnostics.Debugger.IsAttached)
+        //    System.Diagnostics.Debugger.Launch();
+        //else
+        //    System.Diagnostics.Debugger.Break();
 #endif
         if (types.Length == 0)
             context.ReportDiagnostic(Diagnostic.Create(
