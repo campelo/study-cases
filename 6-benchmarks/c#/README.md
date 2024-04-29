@@ -9,7 +9,7 @@ This is a simple benchmark to compare the performance of different libraries to 
 ```
 | Method        | Mean              | Error            | StdDev           |
 |-------------- |------------------:|-----------------:|-----------------:|
-| NormalCreate  |          13.22 ns |         0.238 ns |         0.223 ns |
+| RegularCreate |          13.22 ns |         0.238 ns |         0.223 ns |
 | BogusRuleFor  |     466,447.85 ns |     5,953.425 ns |     5,568.838 ns |
 | BogusGenerate |     475,060.07 ns |     9,450.271 ns |    11,951.567 ns |
 | FixtureCreate | 138,180,986.67 ns | 2,636,302.790 ns | 2,465,999.265 ns |

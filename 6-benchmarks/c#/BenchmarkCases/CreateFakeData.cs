@@ -19,7 +19,7 @@ public class CreateFakeData
     }
 
     [BenchmarkDotNet.Attributes.Benchmark]
-    public Practitioner NormalCreate()
+    public Practitioner RegularCreate()
     {
         Practitioner a = new() { Id = _id };
         return a;
