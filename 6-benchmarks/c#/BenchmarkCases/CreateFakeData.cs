@@ -1,4 +1,6 @@
 ﻿using AutoFixture;
+using AutoFixture.AutoFakeItEasy;
+using AutoFixture.AutoMoq;
 using AutoFixture.AutoNSubstitute;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
@@ -8,14 +10,24 @@ using Hl7.Fhir.Model;
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class CreateFakeData
 {
-    private readonly IFixture _fixture;
+    private readonly IFixture _nSubstituteFixture;
+    private readonly IFixture _moqFixture;
+    private readonly IFixture _fakeItEasyFixture;
     private readonly string _id = "123";
 
     public CreateFakeData()
     {
-        _fixture = new Fixture()
+        _nSubstituteFixture = new Fixture()
             .Customize(new AutoNSubstituteCustomization());
-        _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+        _nSubstituteFixture.Behaviors.Add(new OmitOnRecursionBehavior());
+
+        _moqFixture = new Fixture()
+            .Customize(new AutoMoqCustomization());
+        _moqFixture.Behaviors.Add(new OmitOnRecursionBehavior());
+
+        _fakeItEasyFixture = new Fixture()
+            .Customize(new AutoFakeItEasyCustomization());
+        _fakeItEasyFixture.Behaviors.Add(new OmitOnRecursionBehavior());
     }
 
     [Benchmark]
@@ -26,9 +38,9 @@ public class CreateFakeData
     }
 
     [Benchmark]
-    public Practitioner FixtureBuild()
+    public Practitioner NSubstituteFixtureBuild()
     {
-        Practitioner a = _fixture
+        Practitioner a = _nSubstituteFixture
             .Build<Practitioner>()
             .With(x => x.Id, _id)
             .Create();
@@ -36,9 +48,47 @@ public class CreateFakeData
     }
 
     [Benchmark]
-    public Practitioner FixtureCreate()
+    public Practitioner NSubstituteFixtureCreate()
     {
-        Practitioner a = _fixture
+        Practitioner a = _nSubstituteFixture
+            .Create<Practitioner>();
+        a.Id = _id;
+        return a;
+    }
+
+    [Benchmark]
+    public Practitioner MoqFixtureBuild()
+    {
+        Practitioner a = _moqFixture
+            .Build<Practitioner>()
+            .With(x => x.Id, _id)
+            .Create();
+        return a;
+    }
+
+    [Benchmark]
+    public Practitioner MoqFixtureCreate()
+    {
+        Practitioner a = _moqFixture
+            .Create<Practitioner>();
+        a.Id = _id;
+        return a;
+    }
+
+    [Benchmark]
+    public Practitioner FakeItEasyFixtureBuild()
+    {
+        Practitioner a = _fakeItEasyFixture
+            .Build<Practitioner>()
+            .With(x => x.Id, _id)
+            .Create();
+        return a;
+    }
+
+    [Benchmark]
+    public Practitioner FakeItEasyFixtureCreate()
+    {
+        Practitioner a = _fakeItEasyFixture
             .Create<Practitioner>();
         a.Id = _id;
         return a;
