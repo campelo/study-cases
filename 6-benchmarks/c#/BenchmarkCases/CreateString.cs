@@ -2,6 +2,7 @@
 using AutoFixture.AutoNSubstitute;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
+using AutoBogus;
 using Bogus;
 
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
