@@ -26,14 +26,17 @@ public class CreateFakeData
         _nSubstituteFixture = new Fixture()
             .Customize(new AutoNSubstituteCustomization());
         _nSubstituteFixture.Behaviors.Add(new OmitOnRecursionBehavior());
+        // _nSubstituteFixture.OmitAutoProperties = true;
 
         _moqFixture = new Fixture()
             .Customize(new AutoMoqCustomization());
         _moqFixture.Behaviors.Add(new OmitOnRecursionBehavior());
+        // _moqFixture.OmitAutoProperties = true;
 
         _fakeItEasyFixture = new Fixture()
             .Customize(new AutoFakeItEasyCustomization());
         _fakeItEasyFixture.Behaviors.Add(new OmitOnRecursionBehavior());
+        // _fakeItEasyFixture.OmitAutoProperties = true;
 
         _nSubstituteAutoFaker = AutoFaker.Create(builder =>
         {
@@ -107,7 +110,40 @@ public class CreateFakeData
     }
 
     [Benchmark]
-    public Practitioner FakeItEasyFixtureCreate()
+    public Practitioner NSubstituteFixtureBuildWithOmit()
+    {
+        Practitioner a = _nSubstituteFixture
+            .Build<Practitioner>()
+            .OmitAutoProperties()
+            .With(x => x.Id, _id)
+            .Create();
+        return a;
+    }
+
+    [Benchmark]
+    public Practitioner MoqFixtureBuildWithOmit()
+    {
+        Practitioner a = _moqFixture
+            .Build<Practitioner>()
+            .OmitAutoProperties()
+            .With(x => x.Id, _id)
+            .Create();
+        return a;
+    }
+
+    [Benchmark]
+    public Practitioner FakeItEasyFixtureBuildWithOmit()
+    {
+        Practitioner a = _fakeItEasyFixture
+            .Build<Practitioner>()
+            .OmitAutoProperties()
+            .With(x => x.Id, _id)
+            .Create();
+        return a;
+    }
+
+    [Benchmark]
+    public Practitioner FakeItEasyFixtureCreateWithOmit()
     {
         Practitioner a = _fakeItEasyFixture
             .Create<Practitioner>();
@@ -134,30 +170,30 @@ public class CreateFakeData
         return a;
     }
 
-    [Benchmark]
-    public Practitioner NSubstituteAutoBogusGenerate()
-    {
-        Practitioner a = _nSubstituteAutoFaker
-            .Generate<Practitioner>();
-        a.Id = _id;
-        return a;
-    }
+    // [Benchmark]
+    // public Practitioner NSubstituteAutoBogusGenerate()
+    // {
+    //     Practitioner a = _nSubstituteAutoFaker
+    //         .Generate<Practitioner>();
+    //     a.Id = _id;
+    //     return a;
+    // }
 
-    [Benchmark]
-    public Practitioner MoqAutoBogusGenerate()
-    {
-        Practitioner a = _moqAutoFaker
-            .Generate<Practitioner>();
-        a.Id = _id;
-        return a;
-    }
+    // [Benchmark]
+    // public Practitioner MoqAutoBogusGenerate()
+    // {
+    //     Practitioner a = _moqAutoFaker
+    //         .Generate<Practitioner>();
+    //     a.Id = _id;
+    //     return a;
+    // }
 
-    [Benchmark]
-    public Practitioner FakeItEasyAutoBogusGenerate()
-    {
-        Practitioner a = _fakeItEasyAutoFaker
-            .Generate<Practitioner>();
-        a.Id = _id;
-        return a;
-    }
+    // [Benchmark]
+    // public Practitioner FakeItEasyAutoBogusGenerate()
+    // {
+    //     Practitioner a = _fakeItEasyAutoFaker
+    //         .Generate<Practitioner>();
+    //     a.Id = _id;
+    //     return a;
+    // }
 }
