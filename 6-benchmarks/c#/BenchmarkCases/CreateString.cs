@@ -50,9 +50,16 @@ public class CreateString
     }
 
     [Benchmark]
-    public string FixtureCreate()
+    public string FixtureCreateString()
     {
         string a = _fixture.Create<string>();
+        return a;
+    }
+
+    [Benchmark]
+    public string FixtureCreateInt()
+    {
+        string a = _fixture.Create<int>().ToString();
         return a;
     }
 
@@ -60,6 +67,20 @@ public class CreateString
     public string BogusName()
     {
         string a = _faker.Name.FirstName();
+        return a;
+    }
+
+    [Benchmark]
+    public string BogusRandomAlphanumeric()
+    {
+        string a = _faker.Random.AlphaNumeric(10);
+        return a;
+    }
+
+    [Benchmark]
+    public string BogusIntToString()
+    {
+        string a = _faker.Random.Int().ToString();
         return a;
     }
 }
