@@ -4,6 +4,7 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
 using AutoBogus;
 using Bogus;
+using System.Collections;
 
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class CreateString
@@ -11,6 +12,7 @@ public class CreateString
     private static readonly string _string = "fake string";
     private readonly IFixture _fixture;
     private readonly Faker _faker;
+    private readonly YieldString _yieldString;
 
     public CreateString()
     {
@@ -19,6 +21,8 @@ public class CreateString
         _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
 
         _faker = new Faker();
+
+        _yieldString = new YieldString();
     }
 
     [Benchmark]
@@ -32,6 +36,13 @@ public class CreateString
     public string RegularCreate()
     {
         string a = "a new name string";
+        return a;
+    }
+
+    [Benchmark]
+    public string YieldList()
+    {
+        string a = _yieldString.Next;
         return a;
     }
 
@@ -83,4 +94,43 @@ public class CreateString
         string a = _faker.Random.Int().ToString();
         return a;
     }
+}
+
+public class YieldString : IEnumerable<string>
+{
+    private static readonly List<string> _stringList = new List<string>
+    {
+        "string 1",
+        "string 2",
+        "string 3",
+        "string 4",
+        "string 5",
+        "string 6",
+        "string 7",
+        "string 8",
+        "string 9",
+        "string 10",
+    };
+
+    private IEnumerator<string> _enumerator;
+
+    public string Next => _enumerator.MoveNext() ? _enumerator.Current : "";
+
+    public YieldString()
+    {
+        _enumerator = GetEnumerator();
+    }
+
+    public IEnumerator<string> GetEnumerator()
+    {
+        while (true)
+        {
+            foreach (string str in _stringList)
+            {
+                yield return str;
+            }
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

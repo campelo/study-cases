@@ -30,15 +30,16 @@ This is a simple benchmark to compare the performance of different libraries to 
 ```
 | Method                  | Mean           | Error       | StdDev      |
 |------------------------ |---------------:|------------:|------------:|
-| RegularCreate           |      0.0000 ns |   0.0000 ns |   0.0000 ns |
-| StaticString            |      0.0923 ns |   0.0056 ns |   0.0050 ns |
-| BogusIntToString        |     64.4741 ns |   1.0704 ns |   0.8939 ns |
-| BogusName               |    151.9556 ns |   0.6868 ns |   0.6089 ns |
-| BogusRandomAlphanumeric |    389.4184 ns |   3.4256 ns |   3.2043 ns |
-| RegularNewGuid          |    481.6495 ns |   6.4125 ns |   5.3547 ns |
-| RandomToString          |    505.1077 ns |   1.7401 ns |   1.5426 ns |
-| FixtureCreateString     |  9,849.9974 ns | 166.4571 ns | 155.7041 ns |
-| FixtureCreateInt        | 10,201.5911 ns | 101.9611 ns | 113.3295 ns |
+| StaticString            |      0.0000 ns |   0.0000 ns |   0.0000 ns |
+| RegularCreate           |      0.0921 ns |   0.0042 ns |   0.0040 ns |
+| YieldList               |     15.9201 ns |   0.0617 ns |   0.0547 ns |
+| BogusIntToString        |     67.0603 ns |   0.1307 ns |   0.1021 ns |
+| BogusName               |    153.8072 ns |   1.2702 ns |   1.1260 ns |
+| BogusRandomAlphanumeric |    427.3547 ns |   2.0814 ns |   1.9470 ns |
+| RegularNewGuid          |    477.0530 ns |   2.1823 ns |   1.9346 ns |
+| RandomToString          |    509.2469 ns |   1.6844 ns |   1.4931 ns |
+| FixtureCreateString     |  9,932.7364 ns |  56.8761 ns |  50.4191 ns |
+| FixtureCreateInt        | 10,795.1849 ns | 144.9678 ns | 128.5101 ns |
 ```
 
 ## Map Assemblies
