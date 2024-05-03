@@ -9,18 +9,18 @@ This is a simple benchmark to compare the performance of different libraries to 
 ```
 | Method                          | Mean              | Error            | StdDev           |
 |-------------------------------- |------------------:|-----------------:|-----------------:|
-| RegularCreate                   |          44.99 ns |         0.997 ns |         0.932 ns |
-| BogusWithoutRule                |         145.95 ns |         1.152 ns |         1.078 ns |
-| BogusWithRule                   |         207.42 ns |         4.203 ns |         4.497 ns |
-| MoqFixtureBuildWithOmit         |      92,546.44 ns |       704.609 ns |       624.617 ns |
-| NSubstituteFixtureBuildWithOmit |      93,719.29 ns |       997.107 ns |       832.629 ns |
-| FakeItEasyFixtureBuildWithOmit  |      96,948.08 ns |     1,529.108 ns |     2,469.225 ns |
-| MoqFixtureCreate                | 464,275,048.00 ns | 5,119,123.807 ns | 4,537,969.917 ns |
-| FakeItEasyFixtureCreateWithOmit | 468,306,530.53 ns | 4,921,327.206 ns | 4,603,412.522 ns |
-| MoqFixtureBuild                 | 472,407,468.54 ns | 6,770,017.247 ns | 5,653,271.017 ns |
-| FakeItEasyFixtureBuild          | 489,277,382.38 ns | 2,497,992.341 ns | 2,085,936.740 ns |
-| NSubstituteFixtureCreate        | 501,406,327.53 ns | 4,547,716.483 ns | 4,253,936.820 ns |
-| NSubstituteFixtureBuild         | 517,150,622.50 ns | 3,279,398.237 ns | 2,907,101.118 ns |
+| RegularCreate                   |          13.29 ns |         0.069 ns |         0.064 ns |
+| BogusWithoutRule                |          43.57 ns |         0.292 ns |         0.273 ns |
+| BogusWithRule                   |          59.16 ns |         0.941 ns |         0.880 ns |
+| NSubstituteFixtureBuildWithOmit |      24,590.65 ns |       215.765 ns |       201.827 ns |
+| FakeItEasyFixtureBuildWithOmit  |      25,402.94 ns |       223.623 ns |       209.177 ns |
+| MoqFixtureBuildWithOmit         |      25,442.33 ns |       263.082 ns |       219.685 ns |
+| MoqFixtureCreate                | 123,945,269.23 ns | 1,423,452.507 ns | 1,188,647.312 ns |
+| MoqFixtureBuild                 | 126,969,521.43 ns | 1,739,241.895 ns | 1,541,792.638 ns |
+| FakeItEasyFixtureCreateWithOmit | 129,693,011.76 ns | 2,475,227.590 ns | 2,541,876.497 ns |
+| FakeItEasyFixtureBuild          | 133,268,445.00 ns | 2,648,433.755 ns | 3,049,940.251 ns |
+| NSubstituteFixtureCreate        | 138,744,188.24 ns | 2,663,406.746 ns | 2,735,122.636 ns |
+| NSubstituteFixtureBuild         | 140,750,393.33 ns | 2,597,975.163 ns | 2,430,147.580 ns |
 ```
 
 ## Create String
@@ -28,18 +28,19 @@ This is a simple benchmark to compare the performance of different libraries to 
 This is a simple benchmark to compare the performance of different libraries to create a string.
 
 ```
-| Method                  | Mean           | Error       | StdDev      |
-|------------------------ |---------------:|------------:|------------:|
-| StaticString            |      0.0000 ns |   0.0000 ns |   0.0000 ns |
-| RegularCreate           |      0.0921 ns |   0.0042 ns |   0.0040 ns |
-| YieldList               |     15.9201 ns |   0.0617 ns |   0.0547 ns |
-| BogusIntToString        |     67.0603 ns |   0.1307 ns |   0.1021 ns |
-| BogusName               |    153.8072 ns |   1.2702 ns |   1.1260 ns |
-| BogusRandomAlphanumeric |    427.3547 ns |   2.0814 ns |   1.9470 ns |
-| RegularNewGuid          |    477.0530 ns |   2.1823 ns |   1.9346 ns |
-| RandomToString          |    509.2469 ns |   1.6844 ns |   1.4931 ns |
-| FixtureCreateString     |  9,932.7364 ns |  56.8761 ns |  50.4191 ns |
-| FixtureCreateInt        | 10,795.1849 ns | 144.9678 ns | 128.5101 ns |
+| Method                  | Mean          | Error      | StdDev     | Median        |
+|------------------------ |--------------:|-----------:|-----------:|--------------:|
+| StaticString            |     0.0088 ns |  0.0145 ns |  0.0136 ns |     0.0000 ns |
+| RegularCreate           |     0.0242 ns |  0.0241 ns |  0.0465 ns |     0.0000 ns |
+| YieldList               |     8.7463 ns |  0.1965 ns |  0.2485 ns |     8.6721 ns |
+| BogusIntToString        |    23.0505 ns |  0.2990 ns |  0.2651 ns |    23.1014 ns |
+| Singleton               |    24.3170 ns |  0.4903 ns |  0.8055 ns |    24.2251 ns |
+| BogusName               |    44.6186 ns |  0.3577 ns |  0.2987 ns |    44.6669 ns |
+| RegularNewGuid          |    46.5062 ns |  0.9306 ns |  1.1429 ns |    46.2268 ns |
+| RandomToString          |    70.5602 ns |  0.7500 ns |  0.6263 ns |    70.3841 ns |
+| BogusRandomAlphanumeric |   157.0048 ns |  3.0738 ns |  2.8752 ns |   155.5343 ns |
+| FixtureCreateString     | 3,120.1152 ns | 35.2934 ns | 33.0135 ns | 3,107.4013 ns |
+| FixtureCreateInt        | 3,502.1852 ns | 68.2896 ns | 91.1646 ns | 3,484.8408 ns |
 ```
 
 ## Map Assemblies
