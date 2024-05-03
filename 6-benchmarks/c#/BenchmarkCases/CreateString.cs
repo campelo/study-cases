@@ -2,7 +2,6 @@
 using AutoFixture.AutoNSubstitute;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
-using AutoBogus;
 using Bogus;
 using System.Collections;
 
@@ -13,6 +12,7 @@ public class CreateString
     private readonly IFixture _fixture;
     private readonly Faker _faker;
     private readonly YieldString _yieldString;
+    private readonly FakeString _singleton;
 
     public CreateString()
     {
@@ -23,6 +23,8 @@ public class CreateString
         _faker = new Faker();
 
         _yieldString = new YieldString();
+
+        _singleton = SingletonVolatile.FakeString;
     }
 
     [Benchmark]
@@ -42,7 +44,14 @@ public class CreateString
     [Benchmark]
     public string YieldList()
     {
-        string a = _yieldString.Next;
+        string a = new YieldString().Next;
+        return a;
+    }
+
+    [Benchmark]
+    public string Singleton()
+    {
+        string a = _singleton.Next;
         return a;
     }
 
@@ -133,4 +142,61 @@ public class YieldString : IEnumerable<string>
     }
 
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+}
+
+public static class SingletonVolatile
+{
+    private static FakeString _fakeString;
+    private static volatile object _syncRoot = new();
+
+    public static FakeString FakeString
+    {
+        get
+        {
+            if (_fakeString is null)
+                lock (_syncRoot)
+                    _fakeString = new();
+            return _fakeString;
+        }
+    }
+}
+
+public static class SingletonNonVolatile
+{
+    private static FakeString _fakeString;
+    private static object _syncRoot = new();
+
+    public static FakeString FakeString
+    {
+        get
+        {
+            if (_fakeString is null)
+                lock (_syncRoot)
+                    _fakeString = new();
+            return _fakeString;
+        }
+    }
+}
+
+public class FakeString : IEnumerable<string>
+{
+    private IEnumerator<string> _enumerator;
+
+    public FakeString()
+    {
+        _enumerator = GetEnumerator();
+    }
+
+    public string Next => _enumerator.MoveNext() ? _enumerator.Current : string.Empty;
+
+    public IEnumerator<string> GetEnumerator()
+    {
+        int i = 1;
+        while (true)
+        {
+            yield return $"fake-string-{i++}";
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 }
