@@ -4,8 +4,11 @@ using AutoFixture.AutoMoq;
 using AutoFixture.AutoNSubstitute;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Order;
-using Bogus;
+using AutoBogus;
 using Hl7.Fhir.Model;
+using AutoBogus.FakeItEasy;
+using AutoBogus.Moq;
+using Bogus;
 
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 public class CreateFakeData
@@ -13,6 +16,11 @@ public class CreateFakeData
     private readonly IFixture _nSubstituteFixture;
     private readonly IFixture _moqFixture;
     private readonly IFixture _fakeItEasyFixture;
+    private readonly IAutoFaker _nSubstituteAutoFaker;
+    private readonly IAutoFaker _moqAutoFaker;
+    private readonly IAutoFaker _fakeItEasyAutoFaker;
+    private readonly Faker<Practitioner> _fakerWithRule;
+    private readonly Faker<Practitioner> _fakerWithoutRule;
     private readonly string _id = "123";
 
     public CreateFakeData()
@@ -20,14 +28,37 @@ public class CreateFakeData
         _nSubstituteFixture = new Fixture()
             .Customize(new AutoNSubstituteCustomization());
         _nSubstituteFixture.Behaviors.Add(new OmitOnRecursionBehavior());
+        // _nSubstituteFixture.OmitAutoProperties = true;
 
         _moqFixture = new Fixture()
             .Customize(new AutoMoqCustomization());
         _moqFixture.Behaviors.Add(new OmitOnRecursionBehavior());
+        // _moqFixture.OmitAutoProperties = true;
 
         _fakeItEasyFixture = new Fixture()
             .Customize(new AutoFakeItEasyCustomization());
         _fakeItEasyFixture.Behaviors.Add(new OmitOnRecursionBehavior());
+        // _fakeItEasyFixture.OmitAutoProperties = true;
+
+        _nSubstituteAutoFaker = AutoFaker.Create(builder =>
+        {
+            builder.WithBinder<FakeItEasyBinder>();
+        });
+
+        _moqAutoFaker = AutoFaker.Create(builder =>
+        {
+            builder.WithBinder<MoqBinder>();
+        });
+
+        _fakeItEasyAutoFaker = AutoFaker.Create(builder =>
+        {
+            builder.WithBinder<FakeItEasyBinder>();
+        });
+
+        _fakerWithRule = new Faker<Practitioner>()
+            .RuleFor(x => x.Id, _id);
+        
+        _fakerWithoutRule = new Faker<Practitioner>();
     }
 
     [Benchmark]
@@ -86,7 +117,40 @@ public class CreateFakeData
     }
 
     [Benchmark]
-    public Practitioner FakeItEasyFixtureCreate()
+    public Practitioner NSubstituteFixtureBuildWithOmit()
+    {
+        Practitioner a = _nSubstituteFixture
+            .Build<Practitioner>()
+            .OmitAutoProperties()
+            .With(x => x.Id, _id)
+            .Create();
+        return a;
+    }
+
+    [Benchmark]
+    public Practitioner MoqFixtureBuildWithOmit()
+    {
+        Practitioner a = _moqFixture
+            .Build<Practitioner>()
+            .OmitAutoProperties()
+            .With(x => x.Id, _id)
+            .Create();
+        return a;
+    }
+
+    [Benchmark]
+    public Practitioner FakeItEasyFixtureBuildWithOmit()
+    {
+        Practitioner a = _fakeItEasyFixture
+            .Build<Practitioner>()
+            .OmitAutoProperties()
+            .With(x => x.Id, _id)
+            .Create();
+        return a;
+    }
+
+    [Benchmark]
+    public Practitioner FakeItEasyFixtureCreateWithOmit()
     {
         Practitioner a = _fakeItEasyFixture
             .Create<Practitioner>();
@@ -95,21 +159,45 @@ public class CreateFakeData
     }
 
     [Benchmark]
-    public Practitioner BogusGenerate()
+    public Practitioner BogusWithoutRule()
     {
-        Practitioner a = new Faker<Practitioner>().Generate();
+        Practitioner a = _fakerWithoutRule.Generate();
         a.Id = _id;
 
         return a;
     }
 
     [Benchmark]
-    public Practitioner BogusRuleFor()
+    public Practitioner BogusWithRule()
     {
-        var faker = new Faker<Practitioner>()
-            .RuleFor(x => x.Id, _id);
-
-        Practitioner a = faker.Generate();
+        Practitioner a = _fakerWithRule.Generate();
         return a;
     }
+
+    // [Benchmark]
+    // public Practitioner NSubstituteAutoBogusGenerate()
+    // {
+    //     Practitioner a = _nSubstituteAutoFaker
+    //         .Generate<Practitioner>();
+    //     a.Id = _id;
+    //     return a;
+    // }
+
+    // [Benchmark]
+    // public Practitioner MoqAutoBogusGenerate()
+    // {
+    //     Practitioner a = _moqAutoFaker
+    //         .Generate<Practitioner>();
+    //     a.Id = _id;
+    //     return a;
+    // }
+
+    // [Benchmark]
+    // public Practitioner FakeItEasyAutoBogusGenerate()
+    // {
+    //     Practitioner a = _fakeItEasyAutoFaker
+    //         .Generate<Practitioner>();
+    //     a.Id = _id;
+    //     return a;
+    // }
 }
