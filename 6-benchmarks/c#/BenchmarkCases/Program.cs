@@ -51,8 +51,8 @@ public class Program
         // Console.WriteLine(name);
 
         //_ = BenchmarkRunner.Run<MapAssemblies>();
-        _ = BenchmarkRunner.Run<CreateFakeData>();
-        //_ = BenchmarkRunner.Run<CreateString>();
+        // _ = BenchmarkRunner.Run<CreateFakeData>();
+        _ = BenchmarkRunner.Run<CreateString>();
     }
 
     

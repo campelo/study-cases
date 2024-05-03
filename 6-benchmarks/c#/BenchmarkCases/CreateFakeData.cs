@@ -19,6 +19,8 @@ public class CreateFakeData
     private readonly IAutoFaker _nSubstituteAutoFaker;
     private readonly IAutoFaker _moqAutoFaker;
     private readonly IAutoFaker _fakeItEasyAutoFaker;
+    private readonly Faker<Practitioner> _fakerWithRule;
+    private readonly Faker<Practitioner> _fakerWithoutRule;
     private readonly string _id = "123";
 
     public CreateFakeData()
@@ -52,6 +54,11 @@ public class CreateFakeData
         {
             builder.WithBinder<FakeItEasyBinder>();
         });
+
+        _fakerWithRule = new Faker<Practitioner>()
+            .RuleFor(x => x.Id, _id);
+        
+        _fakerWithoutRule = new Faker<Practitioner>();
     }
 
     [Benchmark]
@@ -152,21 +159,18 @@ public class CreateFakeData
     }
 
     [Benchmark]
-    public Practitioner BogusGenerate()
+    public Practitioner BogusWithoutRule()
     {
-        Practitioner a = new Faker<Practitioner>().Generate();
+        Practitioner a = _fakerWithoutRule.Generate();
         a.Id = _id;
 
         return a;
     }
 
     [Benchmark]
-    public Practitioner BogusRuleFor()
+    public Practitioner BogusWithRule()
     {
-        var faker = new Faker<Practitioner>()
-            .RuleFor(x => x.Id, _id);
-
-        Practitioner a = faker.Generate();
+        Practitioner a = _fakerWithRule.Generate();
         return a;
     }
 
