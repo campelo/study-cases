@@ -127,11 +127,3 @@ public interface IExternalService
     Task<Person?> GetFirst();
     Task<string> Create(Person person);
 }
-
-public class Person
-{
-    public string Id { get; set; }
-    public string Name { get; set; }
-    public int Age { get; set; }
-    public string Email { get; set; }
-}
