@@ -57,3 +57,15 @@ This is a simple benchmark to compare the performance of different mapping assem
 | Local_AddMapsTypes      | 398.9 us | 4.50 us | 3.98 us |
 | Local_AddMapsAssemblies | 417.5 us | 8.35 us | 8.93 us |
 ```
+
+## MockTest
+
+This is a simple benchmark to compare the performance of different mocking tests.
+
+```
+| Method                       | Mean      | Error     | StdDev    |
+|----------------------------- |----------:|----------:|----------:|
+| UsingNSubstitute             |  7.491 us | 0.1456 us | 0.1619 us |
+| UsingNSubstituteVariableFunc |  7.675 us | 0.1371 us | 0.1283 us |
+| UsingMoq                     | 19.660 us | 0.3898 us | 0.5590 us |
+```

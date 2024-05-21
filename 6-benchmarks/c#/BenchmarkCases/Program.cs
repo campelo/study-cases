@@ -1,4 +1,6 @@
-﻿using BenchmarkDotNet.Running;
+﻿using BenchmarkCases;
+using BenchmarkDotNet.Running;
+using Moq;
 
 public class Program
 {
@@ -6,6 +8,10 @@ public class Program
     {
         //_ = BenchmarkRunner.Run<MapAssemblies>();
         //_ = BenchmarkRunner.Run<CreateFakeData>();
-        _ = BenchmarkRunner.Run<CreateString>();
+        //_ = BenchmarkRunner.Run<CreateString>();
+        _ = BenchmarkRunner.Run<MockTest>();
+        
+        // MockTest m = new MockTest();
+        // m.UsingMoq();
     }
 }
