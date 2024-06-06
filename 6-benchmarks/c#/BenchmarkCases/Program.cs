@@ -1,8 +1,4 @@
-﻿using BenchmarkCases;
-using BenchmarkDotNet.Configs;
-using BenchmarkDotNet.Jobs;
-using BenchmarkDotNet.Running;
-using Moq;
+﻿using BenchmarkDotNet.Running;
 
 public class Program
 {
@@ -11,11 +7,12 @@ public class Program
         //_ = BenchmarkRunner.Run<MapAssemblies>();
         //_ = BenchmarkRunner.Run<CreateFakeData>();
         //_ = BenchmarkRunner.Run<CreateString>();
-        // _ = BenchmarkRunner.Run<MockTest>();
+        //_ = BenchmarkRunner.Run<MockTest>();
+        _ = BenchmarkRunner.Run<SleepVsDelay>();
 
-        BenchmarkRunner.Run<AssertTest>(
-            DefaultConfig.Instance
-                .WithOptions(ConfigOptions.DisableOptimizationsValidator));
+        //BenchmarkRunner.Run<AssertTest>(
+        //    DefaultConfig.Instance
+        //        .WithOptions(ConfigOptions.DisableOptimizationsValidator));
 
         // MockTest m = new MockTest();
         // m.UsingMoq();

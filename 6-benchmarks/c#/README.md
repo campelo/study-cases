@@ -81,3 +81,14 @@ This is a simple benchmark to compare the performance of different assert tests.
 | UsingShouldly         |   816.2 ns | 15.41 ns | 14.41 ns |   807.9 ns |
 | UsingFluentAssertions | 4,098.1 ns | 80.93 ns | 89.96 ns | 4,070.4 ns |
 ```
+
+## Sleep vs Delay
+
+This is a simple benchmark to compare the performance of different Thread.Sleep and Task.Delay methods.
+
+```
+| Method      | Mean     | Error   | StdDev  |
+|------------ |---------:|--------:|--------:|
+| TaskDelay   | 206.9 ms | 1.92 ms | 1.70 ms |
+| ThreadSleep | 524.4 ms | 9.37 ms | 8.77 ms |
+```
